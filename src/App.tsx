@@ -1,6 +1,6 @@
-import "./index.css";
-import { PersonList } from "./components/PersonList";
-import { PriceInput } from "./components/PriceInput";
+import './index.css';
+import { PersonList } from './components/PersonList';
+import { PriceInput } from './components/PriceInput';
 
 export function App() {
   return (

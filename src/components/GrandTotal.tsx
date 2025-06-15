@@ -12,4 +12,4 @@ export const GrandTotal = () => {
   );
 };
 
-export default GrandTotal; 
+export default GrandTotal;

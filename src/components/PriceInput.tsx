@@ -1,7 +1,8 @@
 import { usePersonStore } from '../store';
 
 export const PriceInput = () => {
-  const { globalNumber, isNumberConfirmed, setGlobalNumber, confirmNumber, resetNumber } = usePersonStore();
+  const { globalNumber, isNumberConfirmed, setGlobalNumber, confirmNumber, resetNumber } =
+    usePersonStore();
 
   const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.replace(/,/g, '');
@@ -24,7 +25,7 @@ export const PriceInput = () => {
         value={formattedNumber}
         onChange={handleNumberChange}
         className={`px-2 py-2 border border-gray-200 rounded text-base text-gray-800 bg-white w-[150px] focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 ${
-          isNumberConfirmed ? 'bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed' : ''
+          isNumberConfirmed ? 'bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-600' : ''
         }`}
         placeholder="Enter a number"
         disabled={isNumberConfirmed}
@@ -57,4 +58,4 @@ export const PriceInput = () => {
   );
 };
 
-export default PriceInput; 
+export default PriceInput;
