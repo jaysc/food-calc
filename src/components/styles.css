@@ -1,0 +1,312 @@
+.person-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: #1f2937; /* dark gray text color */
+}
+
+.add-person-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.persons-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.person-wrapper {
+  background: white;
+  padding: 1.5rem;
+  padding-left: 3rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.person {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.person-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.name-input {
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  flex: 1;
+  color: #1f2937; /* dark gray text color */
+  background-color: white;
+}
+
+.counter-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.counter-button {
+  padding: 0.25rem 0.5rem;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  min-width: 2rem;
+}
+
+.counter-button:hover {
+  background: #4338ca;
+}
+
+.counter-value {
+  font-size: 1rem;
+  font-weight: bold;
+  min-width: 2rem;
+  text-align: center;
+  color: #1f2937; /* dark gray text color */
+}
+
+.add-button {
+  padding: 0.75rem 1.5rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.add-button:hover {
+  background: #059669;
+}
+
+.remove-button {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: #fee2e2;
+  color: #ef4444;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.remove-button:hover {
+  background: #fecaca;
+}
+
+.global-number {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.global-number-label {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #1f2937;
+  white-space: nowrap;
+}
+
+.global-number-input {
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  color: #1f2937;
+  background-color: white;
+  width: 150px;
+}
+
+.global-number-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+.global-number-input.confirmed {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+  color: #4b5563;
+  cursor: not-allowed;
+}
+
+.global-number-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.confirm-button {
+  padding: 0.5rem 1rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.confirm-button:hover:not(:disabled) {
+  background: #059669;
+}
+
+.confirm-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.clear-button {
+  padding: 0.5rem 1rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.clear-button:hover {
+  background: #dc2626;
+}
+
+.confirmed-badge {
+  padding: 0.25rem 0.75rem;
+  background: #e5e7eb;
+  color: #4b5563;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.numbers-total {
+  text-align: right;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #4f46e5;
+  padding: 0.5rem;
+  background: #f3f4f6;
+  border-radius: 0.25rem;
+}
+
+.numbers-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.numbers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dropdown-button {
+  padding: 0.25rem 0.5rem;
+  background: #e5e7eb;
+  color: #4b5563;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  min-width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-button:hover {
+  background: #d1d5db;
+}
+
+.numbers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background: #f9fafb;
+  border-radius: 0.25rem;
+  border: 1px solid #e5e7eb;
+}
+
+.number-item {
+  padding: 0.25rem 0.5rem;
+  background: white;
+  border-radius: 0.25rem;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.number-value {
+  flex: 1;
+}
+
+.delete-number-button {
+  padding: 0.125rem 0.375rem;
+  background: #fee2e2;
+  color: #ef4444;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-number-button:hover {
+  background: #fecaca;
+}
+
+.grand-total {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #4f46e5;
+  padding: 1rem;
+  background: #f3f4f6;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} 
