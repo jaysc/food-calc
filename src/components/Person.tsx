@@ -16,7 +16,6 @@ export const Person = ({ id, initialName }: PersonProps) => {
     addNumber, 
     removeLastConfirmedNumber, 
     removeNumberAtIndex,
-    showNumbers,
     toggleShowNumbers
   } = usePersonStore();
 
@@ -72,17 +71,17 @@ export const Person = ({ id, initialName }: PersonProps) => {
       <div className="numbers-section">
         <div className="numbers-header">
           <div className="numbers-total">
-            Total: {numbersTotal}
+            Total: {numbersTotal.toLocaleString()}
           </div>
           <button 
             type="button" 
-            onClick={toggleShowNumbers}
+            onClick={() => toggleShowNumbers(id)}
             className="dropdown-button"
           >
-            {showNumbers ? '▼' : '▶'}
+            {person.showNumbers ? '▼' : '▶'}
           </button>
         </div>
-        {showNumbers && (
+        {person.showNumbers && (
           <div className="numbers-list">
             {person.numbers.map((number, index) => (
               <div key={`${id}-${number.value}-${index}`} className="number-item">

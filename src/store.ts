@@ -9,13 +9,13 @@ interface Person {
   name: string
   numbers: NumberWithConfirmed[]
   earliestConfirmedNumberIndex: number | null
+  showNumbers: boolean
 }
 
 interface PersonStore {
   persons: Record<string, Person>
   globalNumber: number
   isNumberConfirmed: boolean
-  showNumbers: boolean
   addPerson: (id: string, name: string) => void
   removePerson: (id: string) => void
   setName: (id: string, name: string) => void
@@ -26,19 +26,18 @@ interface PersonStore {
   removeLastConfirmedNumber: (personId: string) => void
   removeNumberAtIndex: (personId: string, index: number) => void
   getNumbersTotal: (personId: string) => number
-  toggleShowNumbers: () => void
+  toggleShowNumbers: (personId: string) => void
 }
 
 export const usePersonStore = create<PersonStore>((set, get) => ({
   persons: {},
   globalNumber: 0,
   isNumberConfirmed: false,
-  showNumbers: false,
 
   addPerson: (id, name) => set((state) => ({
     persons: {
       ...state.persons,
-      [id]: { name, numbers: [], earliestConfirmedNumberIndex: null }
+      [id]: { name, numbers: [], earliestConfirmedNumberIndex: null, showNumbers: false }
     }
   })),
 
@@ -140,5 +139,13 @@ export const usePersonStore = create<PersonStore>((set, get) => ({
     return person.numbers.reduce((sum, num) => sum + num.value, 0)
   },
 
-  toggleShowNumbers: () => set((state) => ({ showNumbers: !state.showNumbers }))
+  toggleShowNumbers: (personId) => set((state) => ({
+    persons: {
+      ...state.persons,
+      [personId]: {
+        ...state.persons[personId],
+        showNumbers: !state.persons[personId].showNumbers
+      }
+    }
+  }))
 })) 
