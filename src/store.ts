@@ -40,11 +40,18 @@ export const usePersonStore = create<PersonStore>((set, get) => ({
       const id = crypto.randomUUID();
 
       return {
-      persons: {
-        ...state.persons,
-        [id]: { name: "", numbers: [], earliestConfirmedNumberIndex: null, showNumbers: false, index: Object.keys(state.persons).length + 1 },
-      },
-    }}),
+        persons: {
+          ...state.persons,
+          [id]: {
+            name: '',
+            numbers: [],
+            earliestConfirmedNumberIndex: null,
+            showNumbers: false,
+            index: Object.keys(state.persons).length + 1,
+          },
+        },
+      };
+    }),
 
   removePerson: (id) =>
     set((state) => {

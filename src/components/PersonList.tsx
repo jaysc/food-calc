@@ -1,29 +1,15 @@
 import { usePersonStore } from '../store';
-import { GrandTotal } from './GrandTotal';
-import { PersonGrid } from './PersonGrid';
+import { Person } from './Person';
 
 export const PersonList = () => {
-  const { addPerson } = usePersonStore();
-
-  const handleAddPerson = () => {
-    addPerson();
-  };
+  const { persons } = usePersonStore();
 
   return (
-    <div className="flex flex-col gap-8 text-gray-800">
-      <div className="flex justify-center mb-8">
-        <button
-          type="button"
-          onClick={handleAddPerson}
-          className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-base font-medium transition-colors"
-        >
-          Add Person
-        </button>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+        {Object.entries(persons).map(([id, person]) => (
+          <Person key={id} id={id} initialName={person.name} />
+        ))}
       </div>
-
-      <GrandTotal />
-      <PersonGrid />
-    </div>
   );
 };
 

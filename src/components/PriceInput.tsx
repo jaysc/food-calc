@@ -15,7 +15,7 @@ export const PriceInput = () => {
   const formattedNumber = globalNumber === null ? '' : globalNumber.toLocaleString();
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm mb-8 flex items-center gap-4">
+    <div className="flex items-center gap-4">
       <label htmlFor="price" className="text-lg font-medium text-gray-800 whitespace-nowrap">
         Price:
       </label>
@@ -25,7 +25,9 @@ export const PriceInput = () => {
         value={formattedNumber}
         onChange={handleNumberChange}
         className={`px-2 py-2 border border-gray-200 rounded text-base text-gray-800 bg-white w-[150px] focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 ${
-          isNumberConfirmed ? 'bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-600' : ''
+          isNumberConfirmed
+            ? 'bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-600'
+            : ''
         }`}
         placeholder="Enter a number"
         disabled={isNumberConfirmed}
@@ -35,7 +37,7 @@ export const PriceInput = () => {
           <button
             type="button"
             onClick={confirmNumber}
-            className={`px-4 py-2 rounded text-sm transition-colors ${
+            className={`px-4 py-3 rounded text-sm transition-colors ${
               globalNumber === null || globalNumber <= 0
                 ? 'bg-gray-400 cursor-not-allowed opacity-70'
                 : 'bg-emerald-600 hover:bg-emerald-700 text-white'

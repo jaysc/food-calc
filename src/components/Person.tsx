@@ -39,11 +39,13 @@ export const Person = ({ id, initialName }: PersonProps) => {
   const hasNumbers = person.numbers.length > 0;
 
   return (
-    <div className={`relative p-6 pl-12 rounded-lg shadow-sm ${
-      person.earliestConfirmedNumberIndex !== null
-        ? 'bg-blue-100 border-2 border-red-500'
-        : 'bg-white border-2 border-gray-200'
-    }`}>
+    <div
+      className={`relative p-6 pl-12 rounded-lg shadow-sm ${
+        person.earliestConfirmedNumberIndex !== null
+          ? 'bg-blue-100 border-2 border-red-500'
+          : 'bg-white border-2 border-gray-200'
+      }`}
+    >
       <button
         type="button"
         onClick={() => removePerson(id)}
@@ -83,8 +85,13 @@ export const Person = ({ id, initialName }: PersonProps) => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-4">
-            <div className="text-right text-lg font-medium text-indigo-600 px-2 py-2 bg-gray-100 rounded">
-              Total: {numbersTotal.toLocaleString()}
+            <div className="flex items-center gap-4">
+              <div className="text-right text-lg font-medium text-indigo-600 px-2 py-2 bg-gray-100 rounded">
+                Total Price: {numbersTotal.toLocaleString()}
+              </div>
+              <div className="text-right text-lg font-medium text-gray-600 px-2 py-2 bg-gray-100 rounded">
+                Items: {person.numbers.length}
+              </div>
             </div>
             <button
               type="button"
