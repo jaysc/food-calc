@@ -183,9 +183,15 @@ export const usePersonStore = create<PersonStore>()(
     {
       name: 'food-calc-storage',
       partialize: (state) => ({
-        persons: state.persons,
-        globalNumber: state.globalNumber,
-        isNumberConfirmed: state.isNumberConfirmed,
+        persons: Object.fromEntries(
+          Object.entries(state.persons).map(([id, person]) => [
+            id,
+            {
+              ...person,
+              showNumbers: false,
+            },
+          ])
+        ),
       }),
     }
   )
