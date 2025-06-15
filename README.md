@@ -1,21 +1,13 @@
-# bun-react-tailwind-template
+# Food Calculator
 
-To install dependencies:
+A simple food calculator built with React and Tailwind.
 
-```bash
-bun install
-```
-
-To start a development server:
+## Quick Start
 
 ```bash
-bun dev
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
-
-To run for production:
-
-```bash
-bun start
-```
-
-This project was created using `bun init` in bun v1.2.16. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
