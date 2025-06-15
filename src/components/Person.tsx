@@ -53,7 +53,7 @@ export const Person = ({ id, initialName }: PersonProps) => {
       >
         ×
       </button>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4 justify-between">
           <input
             type="text"
@@ -76,7 +76,7 @@ export const Person = ({ id, initialName }: PersonProps) => {
               <button
                 type="button"
                 onClick={() => addItem(id, globalNumber)}
-                className="px-3 py-1 bg-indigo-600 text-white rounded text-base transition-colors hover:bg-indigo-700 min-w-10"
+                className="px-3 py-1 bg-indigo-600 text-white rounded text-base transition-colors hover:bg-indigo-700 min-w-12 min-h-10"
               >
                 +
               </button>

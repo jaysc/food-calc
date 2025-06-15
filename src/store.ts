@@ -38,7 +38,7 @@ export const usePersonStore = create<PersonStore>()(
   persist(
     (set, get) => ({
       persons: {},
-      latestItemOrder: 1,
+      latestItemOrder: 0,
       latestItemOrderCounter: 0,
       globalNumber: null,
       isNumberConfirmed: false,
@@ -76,9 +76,13 @@ export const usePersonStore = create<PersonStore>()(
           },
         })),
 
-      setGlobalNumber: (number) => set({ globalNumber: number }),
+      setGlobalNumber: (number) =>
+        set(() => ({
+          globalNumber: number,
+        })),
 
-      confirmNumber: () => set({ isNumberConfirmed: true }),
+      confirmNumber: () =>
+        set((state) => ({ isNumberConfirmed: true, latestItemOrder: state.latestItemOrder + 1 })),
 
       resetNumber: () =>
         set((state) => {
@@ -93,12 +97,15 @@ export const usePersonStore = create<PersonStore>()(
             ])
           );
 
-          state.latestItemOrderCounter = 0;
+          const updatedLatestItemOrder =
+            state.latestItemOrderCounter === 0 ? state.latestItemOrder - 1 : state.latestItemOrder;
 
           return {
             globalNumber: null,
             isNumberConfirmed: false,
             persons: updatedPersons,
+            latestItemOrder: updatedLatestItemOrder,
+            latestItemOrderCounter: 0,
           };
         }),
 
@@ -107,15 +114,9 @@ export const usePersonStore = create<PersonStore>()(
           const person = state.persons[personId];
           if (!person) return state;
 
-          let itemOrder = state.latestItemOrder;
-          if (state.latestItemOrderCounter === 0) {
-            itemOrder = state.latestItemOrder + 1;
-            state.latestItemOrder = itemOrder;
-          }
-
           state.latestItemOrderCounter++;
 
-          const newItems = [...person.items, { value, itemOrder: itemOrder }];
+          const newItems = [...person.items, { value, itemOrder: state.latestItemOrder }];
           return {
             persons: {
               ...state.persons,
@@ -140,10 +141,6 @@ export const usePersonStore = create<PersonStore>()(
           newItems.splice(newItems.length - 1, 1);
 
           state.latestItemOrderCounter--;
-
-          if (state.latestItemOrderCounter === 0) {
-            state.latestItemOrder--;
-          }
 
           return {
             persons: {
