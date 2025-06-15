@@ -1,39 +1,39 @@
 import { usePersonStore } from '../store';
 
-export const GlobalNumber = () => {
+export const PriceInput = () => {
   const { globalNumber, isNumberConfirmed, setGlobalNumber, confirmNumber, resetNumber } = usePersonStore();
 
   const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.replace(/,/g, '');
     // Only allow numbers
     if (/^-?\d*$/.test(value)) {
-      setGlobalNumber(value === '' ? 0 : Number.parseInt(value, 10));
+      setGlobalNumber(value === '' ? null : Number.parseInt(value, 10));
     }
   };
 
-  const formattedNumber = globalNumber.toLocaleString();
+  const formattedNumber = globalNumber === null ? '' : globalNumber.toLocaleString();
 
   return (
-    <div className="global-number">
-      <label htmlFor="global-number" className="global-number-label">
-        Global Number:
+    <div className="price">
+      <label htmlFor="price" className="price-label">
+        Price:
       </label>
       <input
-        id="global-number"
+        id="price"
         type="text"
         value={formattedNumber}
         onChange={handleNumberChange}
-        className={`global-number-input ${isNumberConfirmed ? 'confirmed' : ''}`}
+        className={`price-input ${isNumberConfirmed ? 'confirmed' : ''}`}
         placeholder="Enter a number"
         disabled={isNumberConfirmed}
       />
-      <div className="global-number-actions">
+      <div className="price-actions">
         {!isNumberConfirmed ? (
           <button
             type="button"
             onClick={confirmNumber}
             className="confirm-button"
-            disabled={globalNumber <= 0}
+            disabled={globalNumber === null || globalNumber <= 0}
           >
             Confirm
           </button>
@@ -51,4 +51,4 @@ export const GlobalNumber = () => {
   );
 };
 
-export default GlobalNumber; 
+export default PriceInput; 

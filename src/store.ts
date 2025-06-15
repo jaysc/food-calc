@@ -14,12 +14,12 @@ interface Person {
 
 interface PersonStore {
   persons: Record<string, Person>
-  globalNumber: number
+  globalNumber: number | null
   isNumberConfirmed: boolean
   addPerson: (id: string, name: string) => void
   removePerson: (id: string) => void
   setName: (id: string, name: string) => void
-  setGlobalNumber: (number: number) => void
+  setGlobalNumber: (number: number | null) => void
   confirmNumber: () => void
   resetNumber: () => void
   addNumber: (personId: string, confirmedNumber: number) => void
@@ -31,7 +31,7 @@ interface PersonStore {
 
 export const usePersonStore = create<PersonStore>((set, get) => ({
   persons: {},
-  globalNumber: 0,
+  globalNumber: null,
   isNumberConfirmed: false,
 
   addPerson: (id, name) => set((state) => ({
@@ -71,7 +71,7 @@ export const usePersonStore = create<PersonStore>((set, get) => ({
     );
 
     return {
-      globalNumber: 0,
+      globalNumber: null,
       isNumberConfirmed: false,
       persons: updatedPersons
     };
