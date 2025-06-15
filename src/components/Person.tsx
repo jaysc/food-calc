@@ -10,13 +10,13 @@ export const Person = ({ id, initialName }: PersonProps) => {
   const {
     persons,
     setName,
-    getNumbersTotal,
+    getItemsTotal,
     isNumberConfirmed,
     globalNumber,
-    addNumber,
-    removeLastConfirmedNumber,
-    removeNumberAtIndex,
-    toggleShowNumbers,
+    addItem,
+    removeLastConfirmedItem,
+    removeItemAtIndex,
+    toggleShowItems,
     removePerson,
   } = usePersonStore();
 
@@ -35,13 +35,13 @@ export const Person = ({ id, initialName }: PersonProps) => {
     setName(id, event.target.value);
   };
 
-  const numbersTotal = getNumbersTotal(id);
-  const hasNumbers = person.numbers.length > 0;
+  const itemsTotal = getItemsTotal(id);
+  const hasItems = person.items?.length > 0;
 
   return (
     <div
       className={`relative p-6 pl-12 rounded-lg shadow-sm ${
-        person.earliestConfirmedNumberIndex !== null
+        person.earliestConfirmedItemIndex !== null
           ? 'bg-blue-100 border-2 border-red-500'
           : 'bg-white border-2 border-gray-200'
       }`}
@@ -60,13 +60,13 @@ export const Person = ({ id, initialName }: PersonProps) => {
             value={person.name}
             onChange={handleNameChange}
             placeholder={`Person ${person.index}`}
-            className="flex-1 px-2 py-2 border border-gray-200 rounded text-base text-gray-800 bg-white"
+            className="flex-1 px-2 py-2 border border-gray-200 rounded text-base text-gray-800 bg-white min-w-0"
           />
-          <div className="flex items-center gap-2">
-            {isNumberConfirmed && hasNumbers && person.earliestConfirmedNumberIndex !== null && (
+          <div className="flex items-center gap-2 shrink-0">
+            {isNumberConfirmed && hasItems && person.earliestConfirmedItemIndex !== null && (
               <button
                 type="button"
-                onClick={() => removeLastConfirmedNumber(id)}
+                onClick={() => removeLastConfirmedItem(id)}
                 className="px-2 py-1 bg-indigo-600 text-white rounded text-base transition-colors hover:bg-indigo-700 min-w-8"
               >
                 -
@@ -75,8 +75,8 @@ export const Person = ({ id, initialName }: PersonProps) => {
             {isNumberConfirmed && globalNumber !== null && (
               <button
                 type="button"
-                onClick={() => addNumber(id, globalNumber)}
-                className="px-2 py-1 bg-indigo-600 text-white rounded text-base transition-colors hover:bg-indigo-700 min-w-8"
+                onClick={() => addItem(id, globalNumber)}
+                className="px-3 py-1 bg-indigo-600 text-white rounded text-base transition-colors hover:bg-indigo-700 min-w-10"
               >
                 +
               </button>
@@ -87,31 +87,31 @@ export const Person = ({ id, initialName }: PersonProps) => {
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="text-right text-lg font-medium text-indigo-600 px-2 py-2 bg-gray-100 rounded">
-                Total Price: {numbersTotal.toLocaleString()}
+                Total Price: {itemsTotal.toLocaleString()}
               </div>
               <div className="text-right text-lg font-medium text-gray-600 px-2 py-2 bg-gray-100 rounded">
-                Items: {person.numbers.length}
+                Items: {person.items.length}
               </div>
             </div>
             <button
               type="button"
-              onClick={() => toggleShowNumbers(id)}
+              onClick={() => toggleShowItems(id)}
               className="px-2 py-1 bg-gray-200 text-gray-600 rounded text-base transition-colors hover:bg-gray-300 min-w-8 flex items-center justify-center"
             >
-              {person.showNumbers ? '▼' : '▶'}
+              {person.showItems ? '▼' : '▶'}
             </button>
           </div>
-          {person.showNumbers && (
-            <div className="flex flex-col gap-1 p-2 bg-gray-50 rounded border border-gray-200">
-              {person.numbers.map((number, index) => (
+          {person.showItems && (
+            <div className="flex flex-col gap-1 p-2 bg-gray-50 rounded border border-gray-200 max-h-[200px] overflow-y-auto">
+              {person.items.map((item, index) => (
                 <div
-                  key={`${id}-${number.value}-${index}`}
+                  key={`${id}-${item.value}-${index}`}
                   className="flex items-center justify-between gap-2 px-2 py-1 bg-white rounded border border-gray-200 text-gray-600"
                 >
-                  <span className="flex-1">{number.value.toLocaleString()}</span>
+                  <span className="flex-1">{`${item.itemOrder}. ${item.value.toLocaleString()}`}</span>
                   <button
                     type="button"
-                    onClick={() => removeNumberAtIndex(id, index)}
+                    onClick={() => removeItemAtIndex(id, index)}
                     className="px-1.5 py-0.5 bg-red-100 text-red-500 rounded text-base transition-colors hover:bg-red-200 flex items-center justify-center"
                   >
                     ×

@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface NumberWithConfirmed {
+interface ItemWithConfirmed {
   value: number;
-  confirmedNumber: number;
+  itemOrder: number;
 }
 
 interface Person {
   name: string;
-  numbers: NumberWithConfirmed[];
-  earliestConfirmedNumberIndex: number | null;
-  showNumbers: boolean;
+  items: ItemWithConfirmed[];
+  earliestConfirmedItemIndex: number | null;
+  showItems: boolean;
   index: number;
 }
 
@@ -18,23 +18,28 @@ interface PersonStore {
   persons: Record<string, Person>;
   globalNumber: number | null;
   isNumberConfirmed: boolean;
+  latestItemOrder: number;
+  latestItemOrderCounter: number; // Keeps track if the item has been added or not to a person.
   addPerson: () => void;
   removePerson: (id: string) => void;
   setName: (id: string, name: string) => void;
   setGlobalNumber: (number: number | null) => void;
   confirmNumber: () => void;
   resetNumber: () => void;
-  addNumber: (personId: string, confirmedNumber: number) => void;
-  removeLastConfirmedNumber: (personId: string) => void;
-  removeNumberAtIndex: (personId: string, index: number) => void;
-  getNumbersTotal: (personId: string) => number;
-  toggleShowNumbers: (personId: string) => void;
+  addItem: (personId: string, value: number) => void;
+  removeLastConfirmedItem: (personId: string) => void;
+  removeItemAtIndex: (personId: string, index: number) => void;
+  getItemsTotal: (personId: string) => number;
+  toggleShowItems: (personId: string) => void;
+  setLatestItemOrder: (order: number) => void;
 }
 
 export const usePersonStore = create<PersonStore>()(
   persist(
     (set, get) => ({
       persons: {},
+      latestItemOrder: 1,
+      latestItemOrderCounter: 0,
       globalNumber: null,
       isNumberConfirmed: false,
 
@@ -47,9 +52,9 @@ export const usePersonStore = create<PersonStore>()(
               ...state.persons,
               [id]: {
                 name: '',
-                numbers: [],
-                earliestConfirmedNumberIndex: null,
-                showNumbers: false,
+                items: [],
+                earliestConfirmedItemIndex: null,
+                showItems: false,
                 index: Object.keys(state.persons).length + 1,
               },
             },
@@ -77,16 +82,18 @@ export const usePersonStore = create<PersonStore>()(
 
       resetNumber: () =>
         set((state) => {
-          // Reset all persons' earliestConfirmedNumberIndex
+          // Reset all persons' earliestConfirmedItemIndex
           const updatedPersons = Object.fromEntries(
             Object.entries(state.persons).map(([id, person]) => [
               id,
               {
                 ...person,
-                earliestConfirmedNumberIndex: null,
+                earliestConfirmedItemIndex: null,
               },
             ])
           );
+
+          state.latestItemOrderCounter = 0;
 
           return {
             globalNumber: null,
@@ -95,89 +102,108 @@ export const usePersonStore = create<PersonStore>()(
           };
         }),
 
-      addNumber: (personId, confirmedNumber) =>
+      addItem: (personId, value) =>
         set((state) => {
           const person = state.persons[personId];
           if (!person) return state;
 
-          const newNumbers = [...person.numbers, { value: confirmedNumber, confirmedNumber }];
+          let itemOrder = state.latestItemOrder;
+          if (state.latestItemOrderCounter === 0) {
+            itemOrder = state.latestItemOrder + 1;
+            state.latestItemOrder = itemOrder;
+          }
+
+          state.latestItemOrderCounter++;
+
+          const newItems = [...person.items, { value, itemOrder: itemOrder }];
           return {
             persons: {
               ...state.persons,
               [personId]: {
                 ...person,
-                numbers: newNumbers,
-                earliestConfirmedNumberIndex:
-                  person.earliestConfirmedNumberIndex === null
-                    ? newNumbers.length - 1
-                    : person.earliestConfirmedNumberIndex,
+                items: newItems,
+                earliestConfirmedItemIndex:
+                  person.earliestConfirmedItemIndex === null
+                    ? newItems.length - 1
+                    : person.earliestConfirmedItemIndex,
               },
             },
           };
         }),
 
-      removeLastConfirmedNumber: (personId) =>
+      removeLastConfirmedItem: (personId) =>
         set((state) => {
           const person = state.persons[personId];
-          if (!person || person.earliestConfirmedNumberIndex === null) return state;
+          if (!person || person.earliestConfirmedItemIndex === null) return state;
 
-          const newNumbers = [...person.numbers];
-          newNumbers.splice(newNumbers.length - 1, 1);
+          const newItems = [...person.items];
+          newItems.splice(newItems.length - 1, 1);
+
+          state.latestItemOrderCounter--;
+
+          if (state.latestItemOrderCounter === 0) {
+            state.latestItemOrder--;
+          }
 
           return {
             persons: {
               ...state.persons,
               [personId]: {
                 ...person,
-                numbers: newNumbers,
-                earliestConfirmedNumberIndex:
-                  person.earliestConfirmedNumberIndex === newNumbers.length
+                items: newItems,
+                earliestConfirmedItemIndex:
+                  person.earliestConfirmedItemIndex === newItems.length
                     ? null
-                    : person.earliestConfirmedNumberIndex,
+                    : person.earliestConfirmedItemIndex,
               },
             },
           };
         }),
 
-      removeNumberAtIndex: (personId, index) =>
+      removeItemAtIndex: (personId, index) =>
         set((state) => {
           const person = state.persons[personId];
           if (!person) return state;
 
-          const newNumbers = [...person.numbers];
-          newNumbers.splice(index, 1);
+          const newItems = [...person.items];
+          newItems.splice(index, 1);
 
           return {
             persons: {
               ...state.persons,
               [personId]: {
                 ...person,
-                numbers: newNumbers,
-                earliestConfirmedNumberIndex:
-                  person.earliestConfirmedNumberIndex === index
+                items: newItems,
+                earliestConfirmedItemIndex:
+                  person.earliestConfirmedItemIndex === index
                     ? null
-                    : person.earliestConfirmedNumberIndex,
+                    : person.earliestConfirmedItemIndex,
               },
             },
           };
         }),
 
-      getNumbersTotal: (personId) => {
+      getItemsTotal: (personId) => {
         const state = get();
         const person = state.persons[personId];
-        if (!person) return 0;
-        return person.numbers.reduce((sum, num) => sum + num.value, 0);
+        if (!person || !person.items) return 0;
+        return person.items.reduce((sum, item) => sum + item.value, 0);
       },
 
-      toggleShowNumbers: (personId) =>
+      toggleShowItems: (personId) =>
         set((state) => ({
           persons: {
             ...state.persons,
             [personId]: {
               ...state.persons[personId],
-              showNumbers: !state.persons[personId].showNumbers,
+              showItems: !state.persons[personId].showItems,
             },
           },
+        })),
+
+      setLatestItemOrder: (order) =>
+        set(() => ({
+          latestItemOrder: Math.max(1, order),
         })),
     }),
     {
@@ -188,7 +214,7 @@ export const usePersonStore = create<PersonStore>()(
             id,
             {
               ...person,
-              showNumbers: false,
+              showItems: false,
             },
           ])
         ),

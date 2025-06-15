@@ -16,7 +16,9 @@ export const PriceInput = () => {
       </label>
       <input
         id="price"
-        type="number" pattern="[0-9]*" inputMode="numeric"
+        type="number"
+        pattern="[0-9]*"
+        inputMode="numeric"
         value={globalNumber ?? ''}
         onChange={handleNumberChange}
         className={`px-2 py-2 border border-gray-200 rounded text-base text-gray-800 bg-white w-[150px] focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 ${
