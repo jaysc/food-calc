@@ -7,6 +7,12 @@ export const GrandTotal = () => {
 
   const grandTotal = Object.keys(persons).reduce((sum, id) => sum + getNumbersTotal(id), 0);
 
+  const { addPerson } = usePersonStore();
+
+  const handleAddPerson = () => {
+    addPerson();
+  };
+
   const handleReset = () => {
     if (showConfirm) {
       // Clear localStorage
@@ -25,6 +31,15 @@ export const GrandTotal = () => {
       <div className="text-center text-2xl font-semibold text-indigo-600 py-4 px-4 bg-gray-100 rounded-lg mb-4 shadow-sm">
         Grand Total: {grandTotal.toLocaleString()}
       </div>
+      <div className=" flex justify-center">
+          <button
+            type="button"
+            onClick={handleAddPerson}
+            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-base font-medium transition-colors"
+          >
+            Add Person
+          </button>
+        </div>
       <button
         type="button"
         onClick={handleReset}

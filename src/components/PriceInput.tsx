@@ -5,14 +5,9 @@ export const PriceInput = () => {
     usePersonStore();
 
   const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.replace(/,/g, '');
-    // Only allow numbers
-    if (/^-?\d*$/.test(value)) {
-      setGlobalNumber(value === '' ? null : Number.parseInt(value, 10));
-    }
+    const value = event.target.value;
+    setGlobalNumber(value === '' ? null : Number.parseInt(value, 10));
   };
-
-  const formattedNumber = globalNumber === null ? '' : globalNumber.toLocaleString();
 
   return (
     <div className="flex items-center gap-4">
@@ -21,8 +16,8 @@ export const PriceInput = () => {
       </label>
       <input
         id="price"
-        type="text"
-        value={formattedNumber}
+        type="number" pattern="[0-9]*" inputMode="numeric"
+        value={globalNumber ?? ''}
         onChange={handleNumberChange}
         className={`px-2 py-2 border border-gray-200 rounded text-base text-gray-800 bg-white w-[150px] focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 ${
           isNumberConfirmed
