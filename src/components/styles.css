@@ -27,6 +27,11 @@
   position: relative;
 }
 
+.person-wrapper.highlight {
+  background-color: #a0d2ff;
+  border: 2px solid red;
+}
+
 .person {
   display: flex;
   flex-direction: column;

@@ -26,7 +26,7 @@ export const PersonList = () => {
 
       <div className="persons-container">
         {Object.entries(persons).map(([id, person]) => (
-          <div key={id} className="person-wrapper">
+          <div key={id} className={`person-wrapper ${person.earliestConfirmedNumberIndex !== null ? 'highlight' : ''}`}>
             <button
               type="button"
               onClick={() => removePerson(id)}

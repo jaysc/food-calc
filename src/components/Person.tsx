@@ -16,7 +16,8 @@ export const Person = ({ id, initialName }: PersonProps) => {
     addNumber, 
     removeLastConfirmedNumber, 
     removeNumberAtIndex,
-    toggleShowNumbers
+    toggleShowNumbers,
+    removePerson
   } = usePersonStore();
 
   const person = persons[id];
