@@ -1,5 +1,4 @@
 import "./index.css";
-import "./components/styles.css";
 import { PersonList } from "./components/PersonList";
 import { PriceInput } from "./components/PriceInput";
 

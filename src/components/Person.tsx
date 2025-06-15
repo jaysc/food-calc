@@ -39,58 +39,58 @@ export const Person = ({ id, initialName }: PersonProps) => {
   const hasNumbers = person.numbers.length > 0;
 
   return (
-    <div className="person">
-      <div className="person-header">
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-4 justify-between">
         <input
           type="text"
           value={person.name}
           onChange={handleNameChange}
           placeholder="Enter name"
-          className="name-input"
+          className="flex-1 px-2 py-2 border border-gray-200 rounded text-base text-gray-800 bg-white"
         />
-        <div className="counter-section">
+        <div className="flex items-center gap-2">
           {isNumberConfirmed && hasNumbers && person.earliestConfirmedNumberIndex !== null && (
             <button 
               type="button" 
               onClick={() => removeLastConfirmedNumber(id)} 
-              className="counter-button"
+              className="px-2 py-1 bg-indigo-600 text-white rounded text-base transition-colors hover:bg-indigo-700 min-w-8"
             >
               -
             </button>
           )}
-          {isNumberConfirmed && (
+          {isNumberConfirmed && globalNumber !== null && (
             <button 
               type="button" 
               onClick={() => addNumber(id, globalNumber)} 
-              className="counter-button"
+              className="px-2 py-1 bg-indigo-600 text-white rounded text-base transition-colors hover:bg-indigo-700 min-w-8"
             >
               +
             </button>
           )}
         </div>
       </div>
-      <div className="numbers-section">
-        <div className="numbers-header">
-          <div className="numbers-total">
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-between gap-4">
+          <div className="text-right text-lg font-medium text-indigo-600 px-2 py-2 bg-gray-100 rounded">
             Total: {numbersTotal.toLocaleString()}
           </div>
           <button 
             type="button" 
             onClick={() => toggleShowNumbers(id)}
-            className="dropdown-button"
+            className="px-2 py-1 bg-gray-200 text-gray-600 rounded text-base transition-colors hover:bg-gray-300 min-w-8 flex items-center justify-center"
           >
             {person.showNumbers ? '▼' : '▶'}
           </button>
         </div>
         {person.showNumbers && (
-          <div className="numbers-list">
+          <div className="flex flex-col gap-1 p-2 bg-gray-50 rounded border border-gray-200">
             {person.numbers.map((number, index) => (
-              <div key={`${id}-${number.value}-${index}`} className="number-item">
-                <span className="number-value">{number.value.toLocaleString()}</span>
+              <div key={`${id}-${number.value}-${index}`} className="flex items-center justify-between gap-2 px-2 py-1 bg-white rounded border border-gray-200 text-gray-600">
+                <span className="flex-1">{number.value.toLocaleString()}</span>
                 <button
                   type="button"
                   onClick={() => removeNumberAtIndex(id, index)}
-                  className="delete-number-button"
+                  className="px-1.5 py-0.5 bg-red-100 text-red-500 rounded text-base transition-colors hover:bg-red-200 flex items-center justify-center"
                 >
                   ×
                 </button>
