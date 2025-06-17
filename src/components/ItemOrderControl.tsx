@@ -11,7 +11,7 @@ export const ItemOrderControl = () => {
   };
 
   return (
-    <div className="flex items-center gap-4 p-4 border-gray-200">
+    <div className="flex items-center gap-4 px-4 border-gray-200">
       <div className="flex items-center gap-2">
         <label htmlFor="itemOrder" className="text-lg font-medium text-gray-700">
           Current Item Order:
