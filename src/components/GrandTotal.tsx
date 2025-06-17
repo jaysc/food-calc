@@ -11,7 +11,6 @@ export const GrandTotal = () => {
 
   const grandTotal = Object.keys(persons).reduce((sum, id) => sum + getItemsTotal(id), 0);
 
-
   const handleAddPerson = () => {
     addPerson();
   };

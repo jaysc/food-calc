@@ -6,7 +6,6 @@ export const PriceQuickAdd = () => {
   const addToGlobalNumber = usePersonStore((state) => state.addToGlobalNumber);
   const isNumberConfirmed = usePersonStore((state) => state.isNumberConfirmed);
 
-  
   return (
     <div className="flex gap-2 mt-2 justify-center flex-wrap">
       {values.map((v) => (
@@ -22,4 +21,4 @@ export const PriceQuickAdd = () => {
       ))}
     </div>
   );
-}; 
+};

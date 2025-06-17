@@ -11,4 +11,4 @@ export const GrandItemTotal = () => {
   );
 };
 
-export default GrandItemTotal; 
+export default GrandItemTotal;

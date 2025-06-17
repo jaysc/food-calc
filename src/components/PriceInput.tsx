@@ -11,4 +11,3 @@ export const PriceInput = () => {
 };
 
 export default PriceInput;
-

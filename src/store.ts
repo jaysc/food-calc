@@ -122,7 +122,10 @@ export const usePersonStore = create<PersonStore>()(
 
           state.latestItemOrderCounter++;
 
-          const newItems = [...person.items, { value: state.globalNumber, itemOrder: state.latestItemOrder }];
+          const newItems = [
+            ...person.items,
+            { value: state.globalNumber, itemOrder: state.latestItemOrder },
+          ];
           return {
             persons: {
               ...state.persons,
