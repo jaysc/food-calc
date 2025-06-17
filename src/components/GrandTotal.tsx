@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { usePersonStore } from '../store';
 
 export const GrandTotal = () => {
-  const { persons, getItemsTotal } = usePersonStore();
+  const persons = usePersonStore((state) => state.persons);
+  const addPerson = usePersonStore((state) => state.addPerson);
+  const getItemsTotal = usePersonStore((state) => state.getItemsTotal);
+  
   const [showConfirm, setShowConfirm] = useState(false);
 
   const grandTotal = Object.keys(persons).reduce((sum, id) => sum + getItemsTotal(id), 0);
 
-  const { addPerson } = usePersonStore();
 
   const handleAddPerson = () => {
     addPerson();

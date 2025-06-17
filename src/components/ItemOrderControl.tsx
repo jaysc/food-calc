@@ -1,7 +1,9 @@
 import { usePersonStore } from '../store';
 
 export const ItemOrderControl = () => {
-  const { latestItemOrder, latestItemOrderCounter, setLatestItemOrder } = usePersonStore();
+  const latestItemOrder = usePersonStore((state) => state.latestItemOrder);
+  const latestItemOrderCounter = usePersonStore((state) => state.latestItemOrderCounter);
+  const setLatestItemOrder = usePersonStore((state) => state.setLatestItemOrder);
 
   const handleOrderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newOrder = Number.parseInt(event.target.value, 10);

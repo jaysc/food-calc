@@ -7,18 +7,15 @@ interface PersonProps {
 }
 
 export const Person = ({ id, initialName }: PersonProps) => {
-  const {
-    persons,
-    setName,
-    getItemsTotal,
-    isNumberConfirmed,
-    globalNumber,
-    addItem,
-    removeLastConfirmedItem,
-    removeItemAtIndex,
-    toggleShowItems,
-    removePerson,
-  } = usePersonStore();
+  const persons = usePersonStore((state) => state.persons);
+  const setName = usePersonStore((state) => state.setName);
+  const getItemsTotal = usePersonStore((state) => state.getItemsTotal);
+  const isNumberConfirmed = usePersonStore((state) => state.isNumberConfirmed);
+  const addItem = usePersonStore((state) => state.addItem);
+  const removeLastConfirmedItem = usePersonStore((state) => state.removeLastConfirmedItem);
+  const removeItemAtIndex = usePersonStore((state) => state.removeItemAtIndex);
+  const toggleShowItems = usePersonStore((state) => state.toggleShowItems);
+  const removePerson = usePersonStore((state) => state.removePerson);
 
   const person = persons[id];
 
@@ -72,10 +69,10 @@ export const Person = ({ id, initialName }: PersonProps) => {
                 -
               </button>
             )}
-            {isNumberConfirmed && globalNumber !== null && (
+            {isNumberConfirmed && (
               <button
                 type="button"
-                onClick={() => addItem(id, globalNumber)}
+                onClick={() => addItem(id)}
                 className="px-3 py-1 bg-indigo-600 text-white rounded text-base transition-colors hover:bg-indigo-700 min-w-12 min-h-10"
               >
                 +

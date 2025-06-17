@@ -24,9 +24,10 @@ interface PersonStore {
   removePerson: (id: string) => void;
   setName: (id: string, name: string) => void;
   setGlobalNumber: (number: number | null) => void;
+  addToGlobalNumber: (value: number) => void;
   confirmNumber: () => void;
   resetNumber: () => void;
-  addItem: (personId: string, value: number) => void;
+  addItem: (personId: string) => void;
   removeLastConfirmedItem: (personId: string) => void;
   removeItemAtIndex: (personId: string, index: number) => void;
   getItemsTotal: (personId: string) => number;
@@ -81,6 +82,11 @@ export const usePersonStore = create<PersonStore>()(
           globalNumber: number,
         })),
 
+      addToGlobalNumber: (value) =>
+        set((state) => ({
+          globalNumber: (state.globalNumber ?? 0) + value,
+        })),
+
       confirmNumber: () =>
         set((state) => ({ isNumberConfirmed: true, latestItemOrder: state.latestItemOrder + 1 })),
 
@@ -109,14 +115,14 @@ export const usePersonStore = create<PersonStore>()(
           };
         }),
 
-      addItem: (personId, value) =>
+      addItem: (personId) =>
         set((state) => {
           const person = state.persons[personId];
-          if (!person) return state;
+          if (!person || state.globalNumber == null) return state;
 
           state.latestItemOrderCounter++;
 
-          const newItems = [...person.items, { value, itemOrder: state.latestItemOrder }];
+          const newItems = [...person.items, { value: state.globalNumber, itemOrder: state.latestItemOrder }];
           return {
             persons: {
               ...state.persons,
