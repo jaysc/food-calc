@@ -35,6 +35,12 @@ export const Person = ({ id, initialName }: PersonProps) => {
   const itemsTotal = getItemsTotal(id);
   const hasItems = person.items?.length > 0;
 
+  const handleRemovePerson = () => {
+    if (window.confirm('Are you sure you want to remove this person?')) {
+      removePerson(id);
+    }
+  };
+
   return (
     <div
       className={`relative p-6 pl-12 rounded-lg shadow-sm ${
@@ -45,7 +51,7 @@ export const Person = ({ id, initialName }: PersonProps) => {
     >
       <button
         type="button"
-        onClick={() => removePerson(id)}
+        onClick={handleRemovePerson}
         className="absolute top-3 left-3 w-6 h-6 flex items-center justify-center bg-red-100 text-red-500 rounded text-xl leading-none transition-colors hover:bg-red-200"
       >
         ×
