@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { usePersonStore } from '../store';
+import GrandItemTotal from './GrandItemTotal';
 
 export const GrandTotal = () => {
   const persons = usePersonStore((state) => state.persons);
   const addPerson = usePersonStore((state) => state.addPerson);
   const getItemsTotal = usePersonStore((state) => state.getItemsTotal);
-  
+
   const [showConfirm, setShowConfirm] = useState(false);
 
   const grandTotal = Object.keys(persons).reduce((sum, id) => sum + getItemsTotal(id), 0);
@@ -30,9 +31,10 @@ export const GrandTotal = () => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="text-center text-2xl font-semibold text-indigo-600 py-4 px-4 bg-gray-100 rounded-lg mb-4 shadow-sm">
+      <div className="text-center text-2xl font-semibold text-indigo-600 py-2 px-4 bg-gray-100 rounded-lg mb-2 shadow-sm">
         Grand Total: {grandTotal.toLocaleString()}
       </div>
+      <GrandItemTotal />
       <div className=" flex justify-center">
         <button
           type="button"
